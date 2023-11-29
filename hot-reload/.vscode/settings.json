@@ -1,0 +1,63 @@
+{
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 10000,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[php]": {
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+        "editor.formatOnSave": true
+    },
+    "favorites.resources": [
+        {
+            "filePath": "app\\Controllers",
+            "group": "Default"
+        },
+        {
+            "filePath": "app\\Models",
+            "group": "Default"
+        },
+        {
+            "filePath": "app\\Views",
+            "group": "Default"
+        },
+        {
+            "filePath": "public\\assets\\css",
+            "group": "Default"
+        },
+        {
+            "filePath": "public\\assets\\js\\custom",
+            "group": "Default"
+        },
+        {
+            "filePath": "app\\Config\\Routes.php",
+            "group": "Default"
+        },
+        {
+            "filePath": ".env",
+            "group": "Default"
+        }
+    ],
+    // prettier
+    "prettier.printWidth": 120,
+    "prettier.tabWidth": 2,
+    "prettier.useTabs": false,
+    "prettier.semi": true,
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "es5",
+    "prettier.proseWrap": "never", // Ensure proseWrap is set to 'never' to avoid wrapping
+    "prettier.bracketSpacing": true, // Maintain consistent bracket spacing
+    "prettier.arrowParens": "avoid", // Prefer avoiding unnecessary parentheses around arrow function parameters
+}

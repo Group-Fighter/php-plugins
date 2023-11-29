@@ -1,0 +1,16 @@
+{
+  "penting": "konfigurasi header untuk production di file public/index.php baris 2-11 bisa di hapus atau di sesuaikan",
+  "penting-2": "untuk production file package, bs-config.js dan folder node_modules jangan di bawa",
+  "scripts": {
+    "dev": "concurrently --kill-others \"npm run php\" \"npm run browser-dev\"",
+    "browser": "browser-sync start --proxy localhost:8080 --files 'public/assets/css/**/*.css, public/assets/js/**/*.js, public/**/*.html, app/**/**/*.php, app/**/*.php, app/*.php'",
+    "php": "php spark serve",
+    "browser-dev": "browser-sync start --config bs-config.js"
+  },
+  "dependencies": {
+    "browser-sync": "^2.29.3"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
