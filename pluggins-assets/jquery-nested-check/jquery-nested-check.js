@@ -147,7 +147,7 @@
             });
             return dataDetailAttributes;
           });
-        } else if (isChecked) {
+         } else if (tree[cbChildName] && isChecked) {
           _datas[cbChildName] = tree[cbChildName].map(function (cb) {
             var dataDetailAttributes = {};
             if (cb.checked) {
