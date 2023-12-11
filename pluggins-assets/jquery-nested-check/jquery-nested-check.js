@@ -117,6 +117,7 @@
       checkboxes.each(function (idx) {
         var checkbox = this;
         var cbName = $(checkbox).attr('name');
+        var cbChildName = $(checkbox).attr('data-checkem-parent');
         var isChecked = checkbox.checked;
 
         _value_checkbox.push(isChecked);
@@ -146,6 +147,23 @@
             });
             return dataDetailAttributes;
           });
+        } else if (isChecked) {
+          _datas[cbChildName] = tree[cbChildName].map(function (cb) {
+            var dataDetailAttributes = {};
+            if (cb.checked) {
+              $.each(cb.attributes, function (index, attribute) {
+                // Check if the attribute starts with "data-detail-"
+                if (attribute.name.startsWith('data-detail-')) {
+                  // Get the attribute name without the prefix "data-detail-"
+                  var attributeName = attribute.name.replace('data-detail-', '');
+                  // Store the attribute value in the dataDetailAttributes object
+                  dataDetailAttributes[attributeName] = attribute.value;
+                }
+              });
+            }
+            return dataDetailAttributes;
+          });
+          _datas[cbChildName] = _datas[cbChildName].filter(obj => Object.keys(obj).length !== 0);
         }
       });
 
