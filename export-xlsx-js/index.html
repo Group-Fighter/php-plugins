@@ -1,64 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Export Manager Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
-  </head>
-  <body>
-    <div>
-      <label>Date Range:</label>
-      <span class="reportrange">January 1, 2023 - January 31, 2023</span>
-    </div>
-    <div>
-      <label>Search:</label>
-      <input type="text" id="SearchData" placeholder="Enter search term" />
-    </div>
-    <div>
-      <label>Status:</label>
-      <select id="Status">
-        <option value="">Select Status</option>
-        <option value="1">Active</option>
-        <option value="0">Inactive</option>
-      </select>
-    </div>
-    <button class="btn-export">Export Data</button>
-    <script src="exportManager.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const exportManager = new ExportManager({
-          exportUrl: "/dashboard/invoice/export",
-          triggerSelector: ".btn-export",
-          dataProvider: () => {
-            const dateRange =
-              document.querySelector(".reportrange").textContent;
-            const dates = dateRange.split(" - ");
-            const startDate = moment(dates[0], "MMMM D, YYYY").format(
-              "YYYY-MM-DD"
-            );
-            const endDate = moment(dates[1], "MMMM D, YYYY").format(
-              "YYYY-MM-DD"
-            );
-            return {
-              StartDate: startDate,
-              EndDate: endDate,
-              SearchData: document.querySelector("#SearchData").value || "",
-              Status: document.querySelector("#Status").value || "",
-            };
-          },
-          alertCallback: () => {
-            return Swal.fire({
-              title: "Apakah anda yakin akan mengunduh data?",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonText: "Ya!",
-              cancelButtonText: "Batal",
-            }).then((result) => result.isConfirmed);
-          },
-        });
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export Manager Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment"></script>
+</head>
+<body>
+  <div>
+    <label>Date Range:</label>
+    <span class="reportrange">January 1, 2023 - January 31, 2023</span>
+  </div>
+  <div>
+    <label>Search:</label>
+    <input type="text" id="SearchData" placeholder="Enter search term">
+  </div>
+  <div>
+    <label>Status:</label>
+    <select id="Status">
+      <option value="">Select Status</option>
+      <option value="1">Active</option>
+      <option value="0">Inactive</option>
+    </select>
+  </div>
+  <button class="btn-export">Export Data</button>
+  <script src="exportManager.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const exportManager = new ExportManager({
+        exportUrl: '/dashboard/invoice/export',
+        triggerSelector: '.btn-export',
+        dataProvider: () => {
+          const dateRange = document.querySelector('.reportrange').textContent;
+          const dates = dateRange.split(' - ');
+          const startDate = moment(dates[0], 'MMMM D, YYYY').format('YYYY-MM-DD');
+          const endDate = moment(dates[1], 'MMMM D, YYYY').format('YYYY-MM-DD');
+
+          return {
+            StartDate: startDate,
+            EndDate: endDate,
+            SearchData: document.querySelector('#SearchData').value || '',
+            Status: document.querySelector('#Status').value || '',
+            FileName: `export_${startDate}_${endDate}.xlsx`, // Nama file dinamis
+            DownloadURL: '/download/path/to/file.xlsx', // URL untuk file
+            DeleteURL: '/delete/path/after/download', // URL delete setelah unduh
+          };
+        },
+        alertCallback: () => {
+          return Swal.fire({
+            title: 'Apakah anda yakin akan mengunduh data?',
+            text: 'Data akan diunduh setelah konfirmasi!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya!',
+            cancelButtonText: 'Batal'
+          }).then(result => result.isConfirmed);
+        }
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
