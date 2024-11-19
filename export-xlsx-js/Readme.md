@@ -1,4 +1,4 @@
-# ExportManager Library
+ # ExportManager Library
 ==========================
 
 ## Overview
@@ -7,101 +7,72 @@ ExportManager adalah library JavaScript yang memungkinkan Anda untuk mengunduh d
 
 ## Instalasi
 
-Untuk menggunakan ExportManager, Anda perlu memasukkan library ini ke dalam proyek Anda. Anda dapat melakukannya dengan cara memasukkan tag script berikut ke dalam file HTML Anda:
-
-```html
-<script src="export-manager.js"></script>
-```
-
-## Penggunaan
-
-Untuk menggunakan ExportManager, Anda perlu membuat instance dari kelas `ExportManager` dan memanggil metode `init` untuk menginisialisasi library. Berikut adalah contoh penggunaan:
-
+Untuk menggunakan ExportManager, Anda dapat memasukkan kode berikut ke dalam proyek Anda:
 ```javascript
-const exportManager = new ExportManager({
-  exportUrl: 'https://example.com/export', // URL untuk ekspor data
-  triggerSelector: '.btn-export', // Selector untuk tombol ekspor
-  dataProvider: () => ({ // Fungsi untuk menyediakan data dinamis
-    nama: 'John Doe',
-    alamat: 'Jalan ABC',
-  }),
-  alertCallback: () => { // Fungsi untuk menampilkan konfirmasi
-    return new Promise(resolve => {
-      Swal.fire({
-        title: 'Apakah anda yakin akan mengunduh data?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya!',
-        cancelButtonText: 'Batal',
-      }).then(result => {
-        resolve(result.isConfirmed);
-      });
-    });
-  },
-});
-
-exportManager.init();
+const exportManager = new ExportManager(config);
 ```
-
 ## Konfigurasi
 
-ExportManager memiliki beberapa konfigurasi yang dapat Anda atur untuk menyesuaikan dengan kebutuhan Anda. Berikut adalah daftar konfigurasi yang tersedia:
+ExportManager memerlukan konfigurasi berikut:
 
 * `exportUrl`: URL untuk ekspor data
-* `triggerSelector`: Selector untuk tombol ekspor
-* `dataProvider`: Fungsi untuk menyediakan data dinamis
-* `alertCallback`: Fungsi untuk menampilkan konfirmasi
+* `triggerSelector`: Selektor elemen yang akan dijadikan trigger untuk mengunduh data
+* `dataProvider`: Fungsi yang menyediakan data dinamis untuk diunduh
+* `alertCallback`: Fungsi yang digunakan untuk menampilkan konfirmasi sebelum mengunduh data
 
-## Metode
+Contoh konfigurasi:
+```javascript
+const config = {
+  exportUrl: 'https://example.com/export',
+  triggerSelector: '.btn-export',
+  dataProvider: () => ({ /* data dinamis */ }),
+  alertCallback: () => {
+    // Fungsi konfirmasi
+  }
+};
+```
+## Fungsi
 
-ExportManager memiliki beberapa metode yang dapat Anda gunakan untuk mengunduh data. Berikut adalah daftar metode yang tersedia:
+ExportManager menyediakan beberapa fungsi untuk mengunduh data:
 
-* `init`: Menginisialisasi library
-* `handleExport`: Mengunduh data
-* `sendAjaxRequest`: Mengirim permintaan AJAX ke server
-* `downloadXLSX`: Mengunduh file XLSX
-* `defaultalertCallback`: Fungsi konfirmasi default
-* `alertError`: Fungsi untuk menampilkan notifikasi error
-* `alertSuccess`: Fungsi untuk menampilkan notifikasi sukses
+* `handleExport`: Fungsi yang dijalankan ketika trigger diaktifkan
+* `sendAjaxRequest`: Fungsi yang mengirim permintaan AJAX ke server
+* `downloadXLSX`: Fungsi yang mengunduh file XLSX dari server
 
 ## Contoh Penggunaan
 
-Berikut adalah contoh penggunaan ExportManager dalam sebuah aplikasi:
+Berikut adalah contoh penggunaan ExportManager:
+```javascript
+const exportManager = new ExportManager(config);
 
-```html
-<!-- index.html -->
-<button class="btn-export">Ekspor Data</button>
-
-<script src="export-manager.js"></script>
-<script>
-  const exportManager = new ExportManager({
-    exportUrl: 'https://example.com/export',
-    triggerSelector: '.btn-export',
-    dataProvider: () => ({
-      nama: 'John Doe',
-      alamat: 'Jalan ABC',
-    }),
-    alertCallback: () => {
-      return new Promise(resolve => {
-        Swal.fire({
-          title: 'Apakah anda yakin akan mengunduh data?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Ya!',
-          cancelButtonText: 'Batal',
-        }).then(result => {
-          resolve(result.isConfirmed);
-        });
-      });
-    },
-  });
-
-  exportManager.init();
-</script>
+// Tambahkan event listener ke trigger
+document.addEventListener('click', async event => {
+  if (event.target.matches(config.triggerSelector)) {
+    await exportManager.handleExport();
+  }
+});
 ```
+## API
 
-Dengan menggunakan ExportManager, Anda dapat dengan mudah mengunduh data dalam format XLSX dan menampilkan konfirmasi kepada pengguna.
+### `handleExport()`
+
+Fungsi yang dijalankan ketika trigger diaktifkan.
+
+### `sendAjaxRequest(url, data)`
+
+Fungsi yang mengirim permintaan AJAX ke server.
+
+* `url`: URL untuk ekspor data
+* `data`: Data yang akan diunduh
+
+### `downloadXLSX(url, fileName, afterDownloadUrl)`
+
+Fungsi yang mengunduh file XLSX dari server.
+
+* `url`: URL file XLSX
+* `fileName`: Nama file XLSX
+* `afterDownloadUrl`: URL yang akan diakses setelah file diunduh
+
+## Lisensi
+
+ExportManager library adalah perangkat lunak bebas dan terbuka yang dilisensikan di bawah Lisensi MIT.
