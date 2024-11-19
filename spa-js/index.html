@@ -7,10 +7,10 @@
   </head>
   <body>
     <nav>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/service">Service</a>
-      <a href="/address">Adrress</a>
+      <div href="/" page>Home</div>
+      <a data-url="/about" page>About</a>
+      <a href="/service" page>Service</a>
+      <div href="/address" page>Adrress</div>
     </nav>
 
     <div id="content"></div>
@@ -45,6 +45,7 @@
       const spa = new DynamicSPA({
         container: "#content",
         routes: routes,
+        menuTagAttribute: "page",
       });
 
       spa.addPage("/about", {

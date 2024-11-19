@@ -21,12 +21,26 @@ class DynamicSPA {
 
 		// Handle clicks on navigation links
 		document.addEventListener("click", (e) => {
-			const link = e.target.closest(this.option.menuTagAttribute);
-			if (link && link.href.startsWith(window.location.origin)) {
-				e.preventDefault();
-				this.navigate(link.pathname);
+			const link = e.target.closest(`[${this.option.menuTagAttribute}]`);
+			if (link) {
+				const url = link.getAttribute('href') || link.getAttribute('data-url');
+				if (url) {
+					e.preventDefault();
+					this.navigate(url);
+				}
 			}
 		});
+
+		// document.addEventListener("click", (e) => {
+		// 	const link = e.target.closest('a');
+		// 	if (link && link.href.startsWith(window.location.origin)) {
+		// 		e.preventDefault();
+		// 		console.log(link.pathname);
+
+		// 		this.navigate(link.pathname);
+		// 	}
+		// });
+
 
 		// Load the initial or selected page
 		await this.handleNavigation(location.pathname);
@@ -157,7 +171,7 @@ class DynamicSPA {
 		const searchScript = document.body.querySelectorAll('script.script-link')
 		if (searchScript) {
 			searchScript.forEach(script => {
-				this.loadedScripts.delete(script.src); 
+				this.loadedScripts.delete(script.src);
 				script.remove()
 			});
 		}
@@ -167,20 +181,20 @@ class DynamicSPA {
 		if (!this.loadedScripts) {
 			this.loadedScripts = new Set();
 		}
-	
+
 		// Cek apakah script sudah ada di Set atau DOM
 		if (this.loadedScripts.has(src) || document.querySelector(`script[src="${src}"]`)) {
 			// console.log(`Script ${src} is already loaded.`);
 			return Promise.resolve(); // Kembali langsung jika sudah ada
 		}
-	
+
 		// Buat elemen script baru
 		const script = document.createElement("script");
 		script.src = src;
 		script.classList.add("script-link");
 		script.async = false; // Load scripts secara berurutan
 		document.body.appendChild(script);
-	
+
 		// Tambahkan script ke dalam Set setelah berhasil dimuat
 		return new Promise((resolve, reject) => {
 			script.onload = () => {
@@ -194,7 +208,7 @@ class DynamicSPA {
 			};
 		});
 	}
-	
+
 	// Run inline JavaScript
 	runInlineScript(script) {
 		try {
